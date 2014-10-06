@@ -1,6 +1,3 @@
--- How to decode an audio file with Lua, using LuaJIT FFI and ffmpeg...
--- Michal Kottman, 2011
-
 local FILENAME = arg[1] or 'video.ts'
 local SECTION = print
 
@@ -8,27 +5,6 @@ SECTION "Initializing the FFI library"
 
 local ffi = require 'ffi'
 local C = ffi.C
-
---[[
-To recreate ffmpeg.h, create a file tmp.h with the following content
-(or more, or less, depending on what you want):
-
-#include "config.h"
-#include "libavutil/avstring.h"
-#include "libavutil/pixdesc.h"
-#include "libavformat/avformat.h"
-#include "libavdevinputContexte/avdevinputContexte.h"
-#include "libswscale/swscale.h"
-#include "libavcodec/audioconvert.h"
-#include "libavcodec/colorspace.h"
-#include "libavcodec/opt.h"
-#include "libavcodec/avfft.h"
-#include "libavfilter/avfilter.h"
-#include "libavfilter/avfiltergraph.h"
-#include "libavfilter/graphparser.h"
-
-Then run gcc -E -I $PATH_TO_FFMPEG_SRC tmp.h > ffmpeg.h
-]]
 
 local avcodec = ffi.load('avcodec-55')
 local avformat = ffi.load('avformat-55')
@@ -51,7 +27,6 @@ end
 
 SECTION "Initializing the avcodec and avformat libraries"
 
--- avcodec.avcodec_init()
 avcodec.avcodec_register_all()
 avformat.av_register_all()
 
