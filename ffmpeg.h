@@ -1,46 +1,3 @@
-typedef long int ptrdiff_t;
-
-
-
-
-
-
-
-typedef long unsigned int size_t;
-typedef int wchar_t;
-typedef __signed char int8_t;
-typedef short int16_t;
-typedef int int32_t;
-typedef long long int64_t;
-
-typedef unsigned char uint8_t;
-typedef unsigned short uint16_t;
-typedef unsigned int uint32_t;
-typedef unsigned long long uint64_t;
-
-
-typedef int8_t int_least8_t;
-typedef int16_t int_least16_t;
-typedef int32_t int_least32_t;
-typedef int64_t int_least64_t;
-typedef uint8_t uint_least8_t;
-typedef uint16_t uint_least16_t;
-typedef uint32_t uint_least32_t;
-typedef uint64_t uint_least64_t;
-
-
-
-typedef int8_t int_fast8_t;
-typedef int16_t int_fast16_t;
-typedef int32_t int_fast32_t;
-typedef int64_t int_fast64_t;
-typedef uint8_t uint_fast8_t;
-typedef uint16_t uint_fast16_t;
-typedef uint32_t uint_fast32_t;
-typedef uint64_t uint_fast64_t;
-
-
-
 
 
 typedef signed char __int8_t;
@@ -166,700 +123,19 @@ typedef __uint32_t __darwin_uid_t;
 typedef __uint32_t __darwin_useconds_t;
 typedef unsigned char __darwin_uuid_t[16];
 typedef char __darwin_uuid_string_t[37];
-typedef __darwin_intptr_t intptr_t;
-typedef unsigned long uintptr_t;
-
-
-
-typedef long int intmax_t;
-typedef long unsigned int uintmax_t;
-int av_strstart(const char *str, const char *pfx, const char **ptr);
-int av_stristart(const char *str, const char *pfx, const char **ptr);
-char *av_stristr(const char *haystack, const char *needle);
-char *av_strnstr(const char *haystack, const char *needle, size_t hay_length);
-size_t av_strlcpy(char *dst, const char *src, size_t size);
-size_t av_strlcat(char *dst, const char *src, size_t size);
-size_t av_strlcatf(char *dst, size_t size, const char *fmt, ...) __attribute__((__format__(__printf__, 3, 4)));
-
-
-
-
-
-
-
-static inline size_t av_strnlen(const char *s, size_t len)
-{
-    size_t i;
-    for (i = 0; i < len && s[i]; i++)
-        ;
-    return i;
-}
-char *av_asprintf(const char *fmt, ...) __attribute__((__format__(__printf__, 1, 2)));
-
-
-
-
-char *av_d2str(double d);
-char *av_get_token(const char **buf, const char *term);
-char *av_strtok(char *s, const char *delim, char **saveptr);
-
-
-
-
-int av_isdigit(int c);
-
-
-
-
-int av_isgraph(int c);
-
-
-
-
-int av_isspace(int c);
-
-
-
-
-static inline int av_toupper(int c)
-{
-    if (c >= 'a' && c <= 'z')
-        c ^= 0x20;
-    return c;
-}
-
-
-
-
-static inline int av_tolower(int c)
-{
-    if (c >= 'A' && c <= 'Z')
-        c ^= 0x20;
-    return c;
-}
-
-
-
-
-int av_isxdigit(int c);
-
-
-
-
-
-int av_strcasecmp(const char *a, const char *b);
-
-
-
-
-
-int av_strncasecmp(const char *a, const char *b, size_t n);
-
-
-
-
-
-
-
-const char *av_basename(const char *path);
-
-
-
-
-
-
-
-const char *av_dirname(char *path);
-
-enum AVEscapeMode {
-    AV_ESCAPE_MODE_AUTO,
-    AV_ESCAPE_MODE_BACKSLASH,
-    AV_ESCAPE_MODE_QUOTE,
-};
-int av_escape(char **dst, const char *src, const char *special_chars,
-              enum AVEscapeMode mode, int flags);
-int av_utf8_decode(int32_t *codep, const uint8_t **bufp, const uint8_t *buf_end,
-                   unsigned int flags);
-
 typedef int __darwin_nl_item;
 typedef int __darwin_wctrans_t;
 
 typedef __uint32_t __darwin_wctype_t;
 
 
-
-
-
-
-__attribute__((availability(macosx,introduced=10.4)))
-extern intmax_t
-imaxabs(intmax_t j);
-
-
-typedef struct {
- intmax_t quot;
- intmax_t rem;
-} imaxdiv_t;
-
-__attribute__((availability(macosx,introduced=10.4)))
-extern imaxdiv_t
-imaxdiv(intmax_t __numer, intmax_t __denom);
-
-
-__attribute__((availability(macosx,introduced=10.4)))
-extern intmax_t
-strtoimax(const char * restrict __nptr,
-   char ** restrict __endptr,
-   int __base);
-
-__attribute__((availability(macosx,introduced=10.4)))
-extern uintmax_t
-strtoumax(const char * restrict __nptr,
-   char ** restrict __endptr,
-   int __base);
-
-
-__attribute__((availability(macosx,introduced=10.4)))
-extern intmax_t
-wcstoimax(const wchar_t * restrict __nptr,
-   wchar_t ** restrict __endptr,
-   int __base);
-
-__attribute__((availability(macosx,introduced=10.4)))
-extern uintmax_t
-wcstoumax(const wchar_t * restrict __nptr,
-   wchar_t ** restrict __endptr,
-   int __base);
-
-
-enum AVPixelFormat {
-    AV_PIX_FMT_NONE = -1,
-    AV_PIX_FMT_YUV420P,
-    AV_PIX_FMT_YUYV422,
-    AV_PIX_FMT_RGB24,
-    AV_PIX_FMT_BGR24,
-    AV_PIX_FMT_YUV422P,
-    AV_PIX_FMT_YUV444P,
-    AV_PIX_FMT_YUV410P,
-    AV_PIX_FMT_YUV411P,
-    AV_PIX_FMT_GRAY8,
-    AV_PIX_FMT_MONOWHITE,
-    AV_PIX_FMT_MONOBLACK,
-    AV_PIX_FMT_PAL8,
-    AV_PIX_FMT_YUVJ420P,
-    AV_PIX_FMT_YUVJ422P,
-    AV_PIX_FMT_YUVJ444P,
-
-    AV_PIX_FMT_XVMC_MPEG2_MC,
-    AV_PIX_FMT_XVMC_MPEG2_IDCT,
-
-
-    AV_PIX_FMT_UYVY422,
-    AV_PIX_FMT_UYYVYY411,
-    AV_PIX_FMT_BGR8,
-    AV_PIX_FMT_BGR4,
-    AV_PIX_FMT_BGR4_BYTE,
-    AV_PIX_FMT_RGB8,
-    AV_PIX_FMT_RGB4,
-    AV_PIX_FMT_RGB4_BYTE,
-    AV_PIX_FMT_NV12,
-    AV_PIX_FMT_NV21,
-
-    AV_PIX_FMT_ARGB,
-    AV_PIX_FMT_RGBA,
-    AV_PIX_FMT_ABGR,
-    AV_PIX_FMT_BGRA,
-
-    AV_PIX_FMT_GRAY16BE,
-    AV_PIX_FMT_GRAY16LE,
-    AV_PIX_FMT_YUV440P,
-    AV_PIX_FMT_YUVJ440P,
-    AV_PIX_FMT_YUVA420P,
-
-    AV_PIX_FMT_VDPAU_H264,
-    AV_PIX_FMT_VDPAU_MPEG1,
-    AV_PIX_FMT_VDPAU_MPEG2,
-    AV_PIX_FMT_VDPAU_WMV3,
-    AV_PIX_FMT_VDPAU_VC1,
-
-    AV_PIX_FMT_RGB48BE,
-    AV_PIX_FMT_RGB48LE,
-
-    AV_PIX_FMT_RGB565BE,
-    AV_PIX_FMT_RGB565LE,
-    AV_PIX_FMT_RGB555BE,
-    AV_PIX_FMT_RGB555LE,
-
-    AV_PIX_FMT_BGR565BE,
-    AV_PIX_FMT_BGR565LE,
-    AV_PIX_FMT_BGR555BE,
-    AV_PIX_FMT_BGR555LE,
-
-    AV_PIX_FMT_VAAPI_MOCO,
-    AV_PIX_FMT_VAAPI_IDCT,
-    AV_PIX_FMT_VAAPI_VLD,
-
-    AV_PIX_FMT_YUV420P16LE,
-    AV_PIX_FMT_YUV420P16BE,
-    AV_PIX_FMT_YUV422P16LE,
-    AV_PIX_FMT_YUV422P16BE,
-    AV_PIX_FMT_YUV444P16LE,
-    AV_PIX_FMT_YUV444P16BE,
-
-    AV_PIX_FMT_VDPAU_MPEG4,
-
-    AV_PIX_FMT_DXVA2_VLD,
-
-    AV_PIX_FMT_RGB444LE,
-    AV_PIX_FMT_RGB444BE,
-    AV_PIX_FMT_BGR444LE,
-    AV_PIX_FMT_BGR444BE,
-    AV_PIX_FMT_GRAY8A,
-    AV_PIX_FMT_BGR48BE,
-    AV_PIX_FMT_BGR48LE,
-
-
-
-
-
-
-    AV_PIX_FMT_YUV420P9BE,
-    AV_PIX_FMT_YUV420P9LE,
-    AV_PIX_FMT_YUV420P10BE,
-    AV_PIX_FMT_YUV420P10LE,
-    AV_PIX_FMT_YUV422P10BE,
-    AV_PIX_FMT_YUV422P10LE,
-    AV_PIX_FMT_YUV444P9BE,
-    AV_PIX_FMT_YUV444P9LE,
-    AV_PIX_FMT_YUV444P10BE,
-    AV_PIX_FMT_YUV444P10LE,
-    AV_PIX_FMT_YUV422P9BE,
-    AV_PIX_FMT_YUV422P9LE,
-    AV_PIX_FMT_VDA_VLD,
-
-
-
-
-
-
-
-    AV_PIX_FMT_GBRP,
-    AV_PIX_FMT_GBRP9BE,
-    AV_PIX_FMT_GBRP9LE,
-    AV_PIX_FMT_GBRP10BE,
-    AV_PIX_FMT_GBRP10LE,
-    AV_PIX_FMT_GBRP16BE,
-    AV_PIX_FMT_GBRP16LE,
-
-
-
-
-
-
-    AV_PIX_FMT_YUVA422P_LIBAV,
-    AV_PIX_FMT_YUVA444P_LIBAV,
-
-    AV_PIX_FMT_YUVA420P9BE,
-    AV_PIX_FMT_YUVA420P9LE,
-    AV_PIX_FMT_YUVA422P9BE,
-    AV_PIX_FMT_YUVA422P9LE,
-    AV_PIX_FMT_YUVA444P9BE,
-    AV_PIX_FMT_YUVA444P9LE,
-    AV_PIX_FMT_YUVA420P10BE,
-    AV_PIX_FMT_YUVA420P10LE,
-    AV_PIX_FMT_YUVA422P10BE,
-    AV_PIX_FMT_YUVA422P10LE,
-    AV_PIX_FMT_YUVA444P10BE,
-    AV_PIX_FMT_YUVA444P10LE,
-    AV_PIX_FMT_YUVA420P16BE,
-    AV_PIX_FMT_YUVA420P16LE,
-    AV_PIX_FMT_YUVA422P16BE,
-    AV_PIX_FMT_YUVA422P16LE,
-    AV_PIX_FMT_YUVA444P16BE,
-    AV_PIX_FMT_YUVA444P16LE,
-
-    AV_PIX_FMT_VDPAU,
-
-    AV_PIX_FMT_XYZ12LE,
-    AV_PIX_FMT_XYZ12BE,
-    AV_PIX_FMT_NV16,
-    AV_PIX_FMT_NV20LE,
-    AV_PIX_FMT_NV20BE,
-
-
-
-
-
-
-
-    AV_PIX_FMT_RGBA64BE_LIBAV,
-    AV_PIX_FMT_RGBA64LE_LIBAV,
-    AV_PIX_FMT_BGRA64BE_LIBAV,
-    AV_PIX_FMT_BGRA64LE_LIBAV,
-
-    AV_PIX_FMT_YVYU422,
-
-    AV_PIX_FMT_VDA,
-
-
-    AV_PIX_FMT_RGBA64BE=0x123,
-    AV_PIX_FMT_RGBA64LE,
-    AV_PIX_FMT_BGRA64BE,
-    AV_PIX_FMT_BGRA64LE,
-
-    AV_PIX_FMT_0RGB=0x123+4,
-    AV_PIX_FMT_RGB0,
-    AV_PIX_FMT_0BGR,
-    AV_PIX_FMT_BGR0,
-    AV_PIX_FMT_YUVA444P,
-    AV_PIX_FMT_YUVA422P,
-
-    AV_PIX_FMT_YUV420P12BE,
-    AV_PIX_FMT_YUV420P12LE,
-    AV_PIX_FMT_YUV420P14BE,
-    AV_PIX_FMT_YUV420P14LE,
-    AV_PIX_FMT_YUV422P12BE,
-    AV_PIX_FMT_YUV422P12LE,
-    AV_PIX_FMT_YUV422P14BE,
-    AV_PIX_FMT_YUV422P14LE,
-    AV_PIX_FMT_YUV444P12BE,
-    AV_PIX_FMT_YUV444P12LE,
-    AV_PIX_FMT_YUV444P14BE,
-    AV_PIX_FMT_YUV444P14LE,
-    AV_PIX_FMT_GBRP12BE,
-    AV_PIX_FMT_GBRP12LE,
-    AV_PIX_FMT_GBRP14BE,
-    AV_PIX_FMT_GBRP14LE,
-    AV_PIX_FMT_GBRAP,
-    AV_PIX_FMT_GBRAP16BE,
-    AV_PIX_FMT_GBRAP16LE,
-    AV_PIX_FMT_YUVJ411P,
-
-    AV_PIX_FMT_BAYER_BGGR8,
-    AV_PIX_FMT_BAYER_RGGB8,
-    AV_PIX_FMT_BAYER_GBRG8,
-    AV_PIX_FMT_BAYER_GRBG8,
-    AV_PIX_FMT_BAYER_BGGR16LE,
-    AV_PIX_FMT_BAYER_BGGR16BE,
-    AV_PIX_FMT_BAYER_RGGB16LE,
-    AV_PIX_FMT_BAYER_RGGB16BE,
-    AV_PIX_FMT_BAYER_GBRG16LE,
-    AV_PIX_FMT_BAYER_GBRG16BE,
-    AV_PIX_FMT_BAYER_GRBG16LE,
-    AV_PIX_FMT_BAYER_GRBG16BE,
-
-
-
-
-    AV_PIX_FMT_NB,
-
-
-
-    PIX_FMT_NONE = AV_PIX_FMT_NONE,
-    PIX_FMT_YUV420P,
-    PIX_FMT_YUYV422,
-    PIX_FMT_RGB24,
-    PIX_FMT_BGR24,
-    PIX_FMT_YUV422P,
-    PIX_FMT_YUV444P,
-    PIX_FMT_YUV410P,
-    PIX_FMT_YUV411P,
-    PIX_FMT_GRAY8,
-    PIX_FMT_MONOWHITE,
-    PIX_FMT_MONOBLACK,
-    PIX_FMT_PAL8,
-    PIX_FMT_YUVJ420P,
-    PIX_FMT_YUVJ422P,
-    PIX_FMT_YUVJ444P,
-
-    PIX_FMT_XVMC_MPEG2_MC,
-    PIX_FMT_XVMC_MPEG2_IDCT,
-
-    PIX_FMT_UYVY422,
-    PIX_FMT_UYYVYY411,
-    PIX_FMT_BGR8,
-    PIX_FMT_BGR4,
-    PIX_FMT_BGR4_BYTE,
-    PIX_FMT_RGB8,
-    PIX_FMT_RGB4,
-    PIX_FMT_RGB4_BYTE,
-    PIX_FMT_NV12,
-    PIX_FMT_NV21,
-
-    PIX_FMT_ARGB,
-    PIX_FMT_RGBA,
-    PIX_FMT_ABGR,
-    PIX_FMT_BGRA,
-
-    PIX_FMT_GRAY16BE,
-    PIX_FMT_GRAY16LE,
-    PIX_FMT_YUV440P,
-    PIX_FMT_YUVJ440P,
-    PIX_FMT_YUVA420P,
-
-    PIX_FMT_VDPAU_H264,
-    PIX_FMT_VDPAU_MPEG1,
-    PIX_FMT_VDPAU_MPEG2,
-    PIX_FMT_VDPAU_WMV3,
-    PIX_FMT_VDPAU_VC1,
-
-    PIX_FMT_RGB48BE,
-    PIX_FMT_RGB48LE,
-
-    PIX_FMT_RGB565BE,
-    PIX_FMT_RGB565LE,
-    PIX_FMT_RGB555BE,
-    PIX_FMT_RGB555LE,
-
-    PIX_FMT_BGR565BE,
-    PIX_FMT_BGR565LE,
-    PIX_FMT_BGR555BE,
-    PIX_FMT_BGR555LE,
-
-    PIX_FMT_VAAPI_MOCO,
-    PIX_FMT_VAAPI_IDCT,
-    PIX_FMT_VAAPI_VLD,
-
-    PIX_FMT_YUV420P16LE,
-    PIX_FMT_YUV420P16BE,
-    PIX_FMT_YUV422P16LE,
-    PIX_FMT_YUV422P16BE,
-    PIX_FMT_YUV444P16LE,
-    PIX_FMT_YUV444P16BE,
-
-    PIX_FMT_VDPAU_MPEG4,
-
-    PIX_FMT_DXVA2_VLD,
-
-    PIX_FMT_RGB444LE,
-    PIX_FMT_RGB444BE,
-    PIX_FMT_BGR444LE,
-    PIX_FMT_BGR444BE,
-    PIX_FMT_GRAY8A,
-    PIX_FMT_BGR48BE,
-    PIX_FMT_BGR48LE,
-
-
-
-
-    PIX_FMT_YUV420P9BE,
-    PIX_FMT_YUV420P9LE,
-    PIX_FMT_YUV420P10BE,
-    PIX_FMT_YUV420P10LE,
-    PIX_FMT_YUV422P10BE,
-    PIX_FMT_YUV422P10LE,
-    PIX_FMT_YUV444P9BE,
-    PIX_FMT_YUV444P9LE,
-    PIX_FMT_YUV444P10BE,
-    PIX_FMT_YUV444P10LE,
-    PIX_FMT_YUV422P9BE,
-    PIX_FMT_YUV422P9LE,
-    PIX_FMT_VDA_VLD,
-
-
-
-
-
-
-
-    PIX_FMT_GBRP,
-    PIX_FMT_GBRP9BE,
-    PIX_FMT_GBRP9LE,
-    PIX_FMT_GBRP10BE,
-    PIX_FMT_GBRP10LE,
-    PIX_FMT_GBRP16BE,
-    PIX_FMT_GBRP16LE,
-
-
-    PIX_FMT_RGBA64BE=0x123,
-    PIX_FMT_RGBA64LE,
-    PIX_FMT_BGRA64BE,
-    PIX_FMT_BGRA64LE,
-
-    PIX_FMT_0RGB=0x123+4,
-    PIX_FMT_RGB0,
-    PIX_FMT_0BGR,
-    PIX_FMT_BGR0,
-    PIX_FMT_YUVA444P,
-    PIX_FMT_YUVA422P,
-
-    PIX_FMT_YUV420P12BE,
-    PIX_FMT_YUV420P12LE,
-    PIX_FMT_YUV420P14BE,
-    PIX_FMT_YUV420P14LE,
-    PIX_FMT_YUV422P12BE,
-    PIX_FMT_YUV422P12LE,
-    PIX_FMT_YUV422P14BE,
-    PIX_FMT_YUV422P14LE,
-    PIX_FMT_YUV444P12BE,
-    PIX_FMT_YUV444P12LE,
-    PIX_FMT_YUV444P14BE,
-    PIX_FMT_YUV444P14LE,
-    PIX_FMT_GBRP12BE,
-    PIX_FMT_GBRP12LE,
-    PIX_FMT_GBRP14BE,
-    PIX_FMT_GBRP14LE,
-
-    PIX_FMT_NB,
-
-};
-enum AVColorPrimaries {
-    AVCOL_PRI_BT709 = 1,
-    AVCOL_PRI_UNSPECIFIED = 2,
-    AVCOL_PRI_RESERVED = 3,
-    AVCOL_PRI_BT470M = 4,
-    AVCOL_PRI_BT470BG = 5,
-    AVCOL_PRI_SMPTE170M = 6,
-    AVCOL_PRI_SMPTE240M = 7,
-    AVCOL_PRI_FILM = 8,
-    AVCOL_PRI_BT2020 = 9,
-    AVCOL_PRI_NB,
-};
-
-
-
-
-enum AVColorTransferCharacteristic {
-    AVCOL_TRC_BT709 = 1,
-    AVCOL_TRC_UNSPECIFIED = 2,
-    AVCOL_TRC_RESERVED = 3,
-    AVCOL_TRC_GAMMA22 = 4,
-    AVCOL_TRC_GAMMA28 = 5,
-    AVCOL_TRC_SMPTE170M = 6,
-    AVCOL_TRC_SMPTE240M = 7,
-    AVCOL_TRC_LINEAR = 8,
-    AVCOL_TRC_LOG = 9,
-    AVCOL_TRC_LOG_SQRT = 10,
-    AVCOL_TRC_IEC61966_2_4 = 11,
-    AVCOL_TRC_BT1361_ECG = 12,
-    AVCOL_TRC_IEC61966_2_1 = 13,
-    AVCOL_TRC_BT2020_10 = 14,
-    AVCOL_TRC_BT2020_12 = 15,
-    AVCOL_TRC_NB,
-};
-
-
-
-
-enum AVColorSpace {
-    AVCOL_SPC_RGB = 0,
-    AVCOL_SPC_BT709 = 1,
-    AVCOL_SPC_UNSPECIFIED = 2,
-    AVCOL_SPC_RESERVED = 3,
-    AVCOL_SPC_FCC = 4,
-    AVCOL_SPC_BT470BG = 5,
-    AVCOL_SPC_SMPTE170M = 6,
-    AVCOL_SPC_SMPTE240M = 7,
-    AVCOL_SPC_YCOCG = 8,
-    AVCOL_SPC_BT2020_NCL = 9,
-    AVCOL_SPC_BT2020_CL = 10,
-    AVCOL_SPC_NB,
-};
-
-
-
-
-
-
-enum AVColorRange {
-    AVCOL_RANGE_UNSPECIFIED = 0,
-    AVCOL_RANGE_MPEG = 1,
-    AVCOL_RANGE_JPEG = 2,
-    AVCOL_RANGE_NB,
-};
-enum AVChromaLocation {
-    AVCHROMA_LOC_UNSPECIFIED = 0,
-    AVCHROMA_LOC_LEFT = 1,
-    AVCHROMA_LOC_CENTER = 2,
-    AVCHROMA_LOC_TOPLEFT = 3,
-    AVCHROMA_LOC_TOP = 4,
-    AVCHROMA_LOC_BOTTOMLEFT = 5,
-    AVCHROMA_LOC_BOTTOM = 6,
-    AVCHROMA_LOC_NB,
-};
-
-typedef struct AVComponentDescriptor{
-    uint16_t plane :2;
-
-
-
-
-
-    uint16_t step_minus1 :3;
-
-
-
-
-
-    uint16_t offset_plus1 :3;
-    uint16_t shift :3;
-    uint16_t depth_minus1 :4;
-}AVComponentDescriptor;
-typedef struct AVPixFmtDescriptor{
-    const char *name;
-    uint8_t nb_components;
-    uint8_t log2_chroma_w;
-    uint8_t log2_chroma_h;
-    uint8_t flags;
-    AVComponentDescriptor comp[4];
-}AVPixFmtDescriptor;
-extern __attribute__((deprecated)) const AVPixFmtDescriptor av_pix_fmt_descriptors[];
-void av_read_image_line(uint16_t *dst, const uint8_t *data[4], const int linesize[4],
-                        const AVPixFmtDescriptor *desc, int x, int y, int c, int w, int read_pal_component);
-void av_write_image_line(const uint16_t *src, uint8_t *data[4], const int linesize[4],
-                         const AVPixFmtDescriptor *desc, int x, int y, int c, int w);
-enum AVPixelFormat av_get_pix_fmt(const char *name);
-
-
-
-
-
-
-
-const char *av_get_pix_fmt_name(enum AVPixelFormat pix_fmt);
-char *av_get_pix_fmt_string (char *buf, int buf_size, enum AVPixelFormat pix_fmt);
-int av_get_bits_per_pixel(const AVPixFmtDescriptor *pixdesc);
-
-
-
-
-
-int av_get_padded_bits_per_pixel(const AVPixFmtDescriptor *pixdesc);
-
-
-
-
-
-const AVPixFmtDescriptor *av_pix_fmt_desc_get(enum AVPixelFormat pix_fmt);
-const AVPixFmtDescriptor *av_pix_fmt_desc_next(const AVPixFmtDescriptor *prev);
-
-
-
-
-
-enum AVPixelFormat av_pix_fmt_desc_get_id(const AVPixFmtDescriptor *desc);
-int av_pix_fmt_get_chroma_sub_sample(enum AVPixelFormat pix_fmt,
-                                     int *h_shift, int *v_shift);
-
-
-
-
-
-int av_pix_fmt_count_planes(enum AVPixelFormat pix_fmt);
-
-void ff_check_pixfmt_descriptors(void);
-enum AVPixelFormat av_pix_fmt_swap_endianness(enum AVPixelFormat pix_fmt);
-int av_get_pix_fmt_loss(enum AVPixelFormat dst_pix_fmt,
-                        enum AVPixelFormat src_pix_fmt,
-                        int has_alpha);
-enum AVPixelFormat av_find_best_pix_fmt_of_2(enum AVPixelFormat dst_pix_fmt1, enum AVPixelFormat dst_pix_fmt2,
-                                             enum AVPixelFormat src_pix_fmt, int has_alpha, int *loss_ptr);
 struct timespec
 {
  __darwin_time_t tv_sec;
  long tv_nsec;
 };
 typedef __darwin_clock_t clock_t;
+typedef __darwin_size_t size_t;
 typedef __darwin_time_t time_t;
 
 struct tm {
@@ -920,7 +196,14 @@ time_t timegm(struct tm * const);
 
 
 int nanosleep(const struct timespec *, struct timespec *) __asm("_" "nanosleep") ;
+
+
+
+
+
 typedef __darwin_va_list va_list;
+
+
 
 typedef __darwin_off_t fpos_t;
 struct __sbuf {
@@ -1129,6 +412,50 @@ typedef int errno_t;
 
 
 extern int * __error(void);
+typedef signed char int8_t;
+typedef short int16_t;
+typedef int int32_t;
+typedef long long int64_t;
+
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+typedef unsigned int uint32_t;
+typedef unsigned long long uint64_t;
+
+
+typedef int8_t int_least8_t;
+typedef int16_t int_least16_t;
+typedef int32_t int_least32_t;
+typedef int64_t int_least64_t;
+typedef uint8_t uint_least8_t;
+typedef uint16_t uint_least16_t;
+typedef uint32_t uint_least32_t;
+typedef uint64_t uint_least64_t;
+
+
+
+typedef int8_t int_fast8_t;
+typedef int16_t int_fast16_t;
+typedef int32_t int_fast32_t;
+typedef int64_t int_fast64_t;
+typedef uint8_t uint_fast8_t;
+typedef uint16_t uint_fast16_t;
+typedef uint32_t uint_fast32_t;
+typedef uint64_t uint_fast64_t;
+
+
+
+
+
+
+typedef __darwin_intptr_t intptr_t;
+typedef unsigned long uintptr_t;
+
+
+
+typedef long int intmax_t;
+typedef long unsigned int uintmax_t;
+
 unsigned avutil_version(void);
 
 
@@ -1172,7 +499,52 @@ char av_get_picture_type_char(enum AVPictureType pict_type);
 
 
 
+typedef __darwin_wchar_t wchar_t;
 
+
+
+
+
+
+__attribute__((availability(macosx,introduced=10.4)))
+extern intmax_t
+imaxabs(intmax_t j);
+
+
+typedef struct {
+ intmax_t quot;
+ intmax_t rem;
+} imaxdiv_t;
+
+__attribute__((availability(macosx,introduced=10.4)))
+extern imaxdiv_t
+imaxdiv(intmax_t __numer, intmax_t __denom);
+
+
+__attribute__((availability(macosx,introduced=10.4)))
+extern intmax_t
+strtoimax(const char * restrict __nptr,
+   char ** restrict __endptr,
+   int __base);
+
+__attribute__((availability(macosx,introduced=10.4)))
+extern uintmax_t
+strtoumax(const char * restrict __nptr,
+   char ** restrict __endptr,
+   int __base);
+
+
+__attribute__((availability(macosx,introduced=10.4)))
+extern intmax_t
+wcstoimax(const wchar_t * restrict __nptr,
+   wchar_t ** restrict __endptr,
+   int __base);
+
+__attribute__((availability(macosx,introduced=10.4)))
+extern uintmax_t
+wcstoumax(const wchar_t * restrict __nptr,
+   wchar_t ** restrict __endptr,
+   int __base);
 
 
 
@@ -2005,6 +1377,7 @@ typedef struct __darwin_ucontext ucontext_t;
 
 typedef __darwin_pthread_attr_t pthread_attr_t;
 typedef __darwin_sigset_t sigset_t;
+
 typedef __darwin_uid_t uid_t;
 
 union sigval {
@@ -2267,9 +1640,8 @@ int waitid(idtype_t, id_t, siginfo_t *, int) __asm("_" "waitid") ;
 pid_t wait3(int *, int, struct rusage *);
 pid_t wait4(pid_t, int *, int, struct rusage *);
 
-
-
 void *alloca(size_t);
+
 
 
 
@@ -2297,9 +1669,6 @@ typedef struct {
  long long quot;
  long long rem;
 } lldiv_t;
-
-
-
 extern int __mb_cur_max;
 void abort(void) __attribute__((noreturn));
 int abs(int) __attribute__((const));
@@ -2447,9 +1816,9 @@ void arc4random_stir(void);
 u_int32_t
   arc4random_uniform(u_int32_t ) __attribute__((availability(macosx,introduced=10.7)));
 
-int atexit_b(void (*)(void)) __attribute__((availability(macosx,introduced=10.6)));
+int atexit_b(void ((*))(void)) __attribute__((availability(macosx,introduced=10.6)));
 void *bsearch_b(const void *, const void *, size_t,
-     size_t, int (*)(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
+     size_t, int ((*))(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
 
 
 
@@ -2476,25 +1845,25 @@ int heapsort(void *, size_t, size_t,
      int (*)(const void *, const void *));
 
 int heapsort_b(void *, size_t, size_t,
-     int (*)(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
+     int ((*))(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
 
 int mergesort(void *, size_t, size_t,
      int (*)(const void *, const void *));
 
 int mergesort_b(void *, size_t, size_t,
-     int (*)(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
+     int ((*))(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
 
 void psort(void *, size_t, size_t,
      int (*)(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
 
 void psort_b(void *, size_t, size_t,
-     int (*)(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
+     int ((*))(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
 
 void psort_r(void *, size_t, size_t, void *,
      int (*)(void *, const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
 
 void qsort_b(void *, size_t, size_t,
-     int (*)(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
+     int ((*))(const void *, const void *)) __attribute__((availability(macosx,introduced=10.6)));
 
 void qsort_r(void *, size_t, size_t, void *,
      int (*)(void *, const void *, const void *));
@@ -2514,10 +1883,6 @@ unsigned long long
 
 extern char *suboptarg;
 void *valloc(size_t);
-
-
-
-
 void *memchr(const void *, int, size_t);
 int memcmp(const void *, const void *, size_t);
 void *memcpy(void *, const void *, size_t);
@@ -2583,10 +1948,6 @@ void swab(const void * restrict, void * restrict, ssize_t);
 
 
 
-
-
-
-
 int bcmp(const void *, const void *, size_t) ;
 void bcopy(const void *, void *, size_t) ;
 void bzero(void *, size_t) ;
@@ -2607,6 +1968,7 @@ int ffsll(long long) __attribute__((availability(macosx,introduced=10.9)));
 int fls(int) __attribute__((availability(macosx,introduced=10.5)));
 int flsl(long) __attribute__((availability(macosx,introduced=10.5)));
 int flsll(long long) __attribute__((availability(macosx,introduced=10.9)));
+
 
 
 
@@ -2655,7 +2017,7 @@ static __attribute__((always_inline)) inline __attribute__((const)) uint8_t av_c
 
 static __attribute__((always_inline)) inline __attribute__((const)) int8_t av_clip_int8_c(int a)
 {
-    if ((a+0x80) & ~0xFF) return (a>>31) ^ 0x7F;
+    if ((a+0x80) & ~0xFF) return (a>>31) (*) 0x7F;
     else return a;
 }
 
@@ -2677,7 +2039,7 @@ static __attribute__((always_inline)) inline __attribute__((const)) uint16_t av_
 
 static __attribute__((always_inline)) inline __attribute__((const)) int16_t av_clip_int16_c(int a)
 {
-    if ((a+0x8000) & ~0xFFFF) return (a>>31) ^ 0x7FFF;
+    if ((a+0x8000) & ~0xFFFF) return (a>>31) (*) 0x7FFF;
     else return a;
 }
 
@@ -2688,7 +2050,7 @@ static __attribute__((always_inline)) inline __attribute__((const)) int16_t av_c
 
 static __attribute__((always_inline)) inline __attribute__((const)) int32_t av_clipl_int32_c(int64_t a)
 {
-    if ((a+0x80000000u) & ~(0xFFFFFFFFULL)) return (int32_t)((a>>63) ^ 0x7FFFFFFF);
+    if ((a+0x80000000u) & ~(0xFFFFFFFFULL)) return (int32_t)((a>>63) (*) 0x7FFFFFFF);
     else return (int32_t)a;
 }
 
@@ -2762,6 +2124,7 @@ static __attribute__((always_inline)) inline __attribute__((const)) int av_popco
 {
     return av_popcount_c((uint32_t)x) + av_popcount_c((uint32_t)(x >> 32));
 }
+typedef long int ptrdiff_t;
 int av_strerror(int errnum, char *errbuf, size_t errbuf_size);
 static inline char *av_make_error_string(char *errbuf, size_t errbuf_size, int errnum)
 {
@@ -2858,7 +2221,7 @@ static inline AVRational av_make_q(int num, int den)
 static inline int av_cmp_q(AVRational a, AVRational b){
     const int64_t tmp= a.num * (int64_t)b.den - b.num * (int64_t)a.den;
 
-    if(tmp) return (int)((tmp ^ a.den ^ b.den)>>63)|1;
+    if(tmp) return (int)((tmp (*) a.den ^ b.den)>>63)|1;
     else if(b.den && a.den) return 0;
     else if(a.num && b.num) return (a.num>>31) - (b.num>>31);
     else return (-2147483647 -1);
@@ -3133,7 +2496,451 @@ void av_log_format_line(void *ptr, int level, const char *fmt, va_list vl,
                         char *line, int line_size, int *print_prefix);
 void av_log_set_flags(int arg);
 int av_log_get_flags(void);
+enum AVPixelFormat {
+    AV_PIX_FMT_NONE = -1,
+    AV_PIX_FMT_YUV420P,
+    AV_PIX_FMT_YUYV422,
+    AV_PIX_FMT_RGB24,
+    AV_PIX_FMT_BGR24,
+    AV_PIX_FMT_YUV422P,
+    AV_PIX_FMT_YUV444P,
+    AV_PIX_FMT_YUV410P,
+    AV_PIX_FMT_YUV411P,
+    AV_PIX_FMT_GRAY8,
+    AV_PIX_FMT_MONOWHITE,
+    AV_PIX_FMT_MONOBLACK,
+    AV_PIX_FMT_PAL8,
+    AV_PIX_FMT_YUVJ420P,
+    AV_PIX_FMT_YUVJ422P,
+    AV_PIX_FMT_YUVJ444P,
 
+    AV_PIX_FMT_XVMC_MPEG2_MC,
+    AV_PIX_FMT_XVMC_MPEG2_IDCT,
+
+
+    AV_PIX_FMT_UYVY422,
+    AV_PIX_FMT_UYYVYY411,
+    AV_PIX_FMT_BGR8,
+    AV_PIX_FMT_BGR4,
+    AV_PIX_FMT_BGR4_BYTE,
+    AV_PIX_FMT_RGB8,
+    AV_PIX_FMT_RGB4,
+    AV_PIX_FMT_RGB4_BYTE,
+    AV_PIX_FMT_NV12,
+    AV_PIX_FMT_NV21,
+
+    AV_PIX_FMT_ARGB,
+    AV_PIX_FMT_RGBA,
+    AV_PIX_FMT_ABGR,
+    AV_PIX_FMT_BGRA,
+
+    AV_PIX_FMT_GRAY16BE,
+    AV_PIX_FMT_GRAY16LE,
+    AV_PIX_FMT_YUV440P,
+    AV_PIX_FMT_YUVJ440P,
+    AV_PIX_FMT_YUVA420P,
+
+    AV_PIX_FMT_VDPAU_H264,
+    AV_PIX_FMT_VDPAU_MPEG1,
+    AV_PIX_FMT_VDPAU_MPEG2,
+    AV_PIX_FMT_VDPAU_WMV3,
+    AV_PIX_FMT_VDPAU_VC1,
+
+    AV_PIX_FMT_RGB48BE,
+    AV_PIX_FMT_RGB48LE,
+
+    AV_PIX_FMT_RGB565BE,
+    AV_PIX_FMT_RGB565LE,
+    AV_PIX_FMT_RGB555BE,
+    AV_PIX_FMT_RGB555LE,
+
+    AV_PIX_FMT_BGR565BE,
+    AV_PIX_FMT_BGR565LE,
+    AV_PIX_FMT_BGR555BE,
+    AV_PIX_FMT_BGR555LE,
+
+    AV_PIX_FMT_VAAPI_MOCO,
+    AV_PIX_FMT_VAAPI_IDCT,
+    AV_PIX_FMT_VAAPI_VLD,
+
+    AV_PIX_FMT_YUV420P16LE,
+    AV_PIX_FMT_YUV420P16BE,
+    AV_PIX_FMT_YUV422P16LE,
+    AV_PIX_FMT_YUV422P16BE,
+    AV_PIX_FMT_YUV444P16LE,
+    AV_PIX_FMT_YUV444P16BE,
+
+    AV_PIX_FMT_VDPAU_MPEG4,
+
+    AV_PIX_FMT_DXVA2_VLD,
+
+    AV_PIX_FMT_RGB444LE,
+    AV_PIX_FMT_RGB444BE,
+    AV_PIX_FMT_BGR444LE,
+    AV_PIX_FMT_BGR444BE,
+    AV_PIX_FMT_GRAY8A,
+    AV_PIX_FMT_BGR48BE,
+    AV_PIX_FMT_BGR48LE,
+
+
+
+
+
+
+    AV_PIX_FMT_YUV420P9BE,
+    AV_PIX_FMT_YUV420P9LE,
+    AV_PIX_FMT_YUV420P10BE,
+    AV_PIX_FMT_YUV420P10LE,
+    AV_PIX_FMT_YUV422P10BE,
+    AV_PIX_FMT_YUV422P10LE,
+    AV_PIX_FMT_YUV444P9BE,
+    AV_PIX_FMT_YUV444P9LE,
+    AV_PIX_FMT_YUV444P10BE,
+    AV_PIX_FMT_YUV444P10LE,
+    AV_PIX_FMT_YUV422P9BE,
+    AV_PIX_FMT_YUV422P9LE,
+    AV_PIX_FMT_VDA_VLD,
+
+
+
+
+
+
+
+    AV_PIX_FMT_GBRP,
+    AV_PIX_FMT_GBRP9BE,
+    AV_PIX_FMT_GBRP9LE,
+    AV_PIX_FMT_GBRP10BE,
+    AV_PIX_FMT_GBRP10LE,
+    AV_PIX_FMT_GBRP16BE,
+    AV_PIX_FMT_GBRP16LE,
+
+
+
+
+
+
+    AV_PIX_FMT_YUVA422P_LIBAV,
+    AV_PIX_FMT_YUVA444P_LIBAV,
+
+    AV_PIX_FMT_YUVA420P9BE,
+    AV_PIX_FMT_YUVA420P9LE,
+    AV_PIX_FMT_YUVA422P9BE,
+    AV_PIX_FMT_YUVA422P9LE,
+    AV_PIX_FMT_YUVA444P9BE,
+    AV_PIX_FMT_YUVA444P9LE,
+    AV_PIX_FMT_YUVA420P10BE,
+    AV_PIX_FMT_YUVA420P10LE,
+    AV_PIX_FMT_YUVA422P10BE,
+    AV_PIX_FMT_YUVA422P10LE,
+    AV_PIX_FMT_YUVA444P10BE,
+    AV_PIX_FMT_YUVA444P10LE,
+    AV_PIX_FMT_YUVA420P16BE,
+    AV_PIX_FMT_YUVA420P16LE,
+    AV_PIX_FMT_YUVA422P16BE,
+    AV_PIX_FMT_YUVA422P16LE,
+    AV_PIX_FMT_YUVA444P16BE,
+    AV_PIX_FMT_YUVA444P16LE,
+
+    AV_PIX_FMT_VDPAU,
+
+    AV_PIX_FMT_XYZ12LE,
+    AV_PIX_FMT_XYZ12BE,
+    AV_PIX_FMT_NV16,
+    AV_PIX_FMT_NV20LE,
+    AV_PIX_FMT_NV20BE,
+
+
+
+
+
+
+
+    AV_PIX_FMT_RGBA64BE_LIBAV,
+    AV_PIX_FMT_RGBA64LE_LIBAV,
+    AV_PIX_FMT_BGRA64BE_LIBAV,
+    AV_PIX_FMT_BGRA64LE_LIBAV,
+
+    AV_PIX_FMT_YVYU422,
+
+    AV_PIX_FMT_VDA,
+
+
+    AV_PIX_FMT_RGBA64BE=0x123,
+    AV_PIX_FMT_RGBA64LE,
+    AV_PIX_FMT_BGRA64BE,
+    AV_PIX_FMT_BGRA64LE,
+
+    AV_PIX_FMT_0RGB=0x123+4,
+    AV_PIX_FMT_RGB0,
+    AV_PIX_FMT_0BGR,
+    AV_PIX_FMT_BGR0,
+    AV_PIX_FMT_YUVA444P,
+    AV_PIX_FMT_YUVA422P,
+
+    AV_PIX_FMT_YUV420P12BE,
+    AV_PIX_FMT_YUV420P12LE,
+    AV_PIX_FMT_YUV420P14BE,
+    AV_PIX_FMT_YUV420P14LE,
+    AV_PIX_FMT_YUV422P12BE,
+    AV_PIX_FMT_YUV422P12LE,
+    AV_PIX_FMT_YUV422P14BE,
+    AV_PIX_FMT_YUV422P14LE,
+    AV_PIX_FMT_YUV444P12BE,
+    AV_PIX_FMT_YUV444P12LE,
+    AV_PIX_FMT_YUV444P14BE,
+    AV_PIX_FMT_YUV444P14LE,
+    AV_PIX_FMT_GBRP12BE,
+    AV_PIX_FMT_GBRP12LE,
+    AV_PIX_FMT_GBRP14BE,
+    AV_PIX_FMT_GBRP14LE,
+    AV_PIX_FMT_GBRAP,
+    AV_PIX_FMT_GBRAP16BE,
+    AV_PIX_FMT_GBRAP16LE,
+    AV_PIX_FMT_YUVJ411P,
+
+    AV_PIX_FMT_BAYER_BGGR8,
+    AV_PIX_FMT_BAYER_RGGB8,
+    AV_PIX_FMT_BAYER_GBRG8,
+    AV_PIX_FMT_BAYER_GRBG8,
+    AV_PIX_FMT_BAYER_BGGR16LE,
+    AV_PIX_FMT_BAYER_BGGR16BE,
+    AV_PIX_FMT_BAYER_RGGB16LE,
+    AV_PIX_FMT_BAYER_RGGB16BE,
+    AV_PIX_FMT_BAYER_GBRG16LE,
+    AV_PIX_FMT_BAYER_GBRG16BE,
+    AV_PIX_FMT_BAYER_GRBG16LE,
+    AV_PIX_FMT_BAYER_GRBG16BE,
+
+
+
+
+    AV_PIX_FMT_NB,
+
+
+
+    PIX_FMT_NONE = AV_PIX_FMT_NONE,
+    PIX_FMT_YUV420P,
+    PIX_FMT_YUYV422,
+    PIX_FMT_RGB24,
+    PIX_FMT_BGR24,
+    PIX_FMT_YUV422P,
+    PIX_FMT_YUV444P,
+    PIX_FMT_YUV410P,
+    PIX_FMT_YUV411P,
+    PIX_FMT_GRAY8,
+    PIX_FMT_MONOWHITE,
+    PIX_FMT_MONOBLACK,
+    PIX_FMT_PAL8,
+    PIX_FMT_YUVJ420P,
+    PIX_FMT_YUVJ422P,
+    PIX_FMT_YUVJ444P,
+
+    PIX_FMT_XVMC_MPEG2_MC,
+    PIX_FMT_XVMC_MPEG2_IDCT,
+
+    PIX_FMT_UYVY422,
+    PIX_FMT_UYYVYY411,
+    PIX_FMT_BGR8,
+    PIX_FMT_BGR4,
+    PIX_FMT_BGR4_BYTE,
+    PIX_FMT_RGB8,
+    PIX_FMT_RGB4,
+    PIX_FMT_RGB4_BYTE,
+    PIX_FMT_NV12,
+    PIX_FMT_NV21,
+
+    PIX_FMT_ARGB,
+    PIX_FMT_RGBA,
+    PIX_FMT_ABGR,
+    PIX_FMT_BGRA,
+
+    PIX_FMT_GRAY16BE,
+    PIX_FMT_GRAY16LE,
+    PIX_FMT_YUV440P,
+    PIX_FMT_YUVJ440P,
+    PIX_FMT_YUVA420P,
+
+    PIX_FMT_VDPAU_H264,
+    PIX_FMT_VDPAU_MPEG1,
+    PIX_FMT_VDPAU_MPEG2,
+    PIX_FMT_VDPAU_WMV3,
+    PIX_FMT_VDPAU_VC1,
+
+    PIX_FMT_RGB48BE,
+    PIX_FMT_RGB48LE,
+
+    PIX_FMT_RGB565BE,
+    PIX_FMT_RGB565LE,
+    PIX_FMT_RGB555BE,
+    PIX_FMT_RGB555LE,
+
+    PIX_FMT_BGR565BE,
+    PIX_FMT_BGR565LE,
+    PIX_FMT_BGR555BE,
+    PIX_FMT_BGR555LE,
+
+    PIX_FMT_VAAPI_MOCO,
+    PIX_FMT_VAAPI_IDCT,
+    PIX_FMT_VAAPI_VLD,
+
+    PIX_FMT_YUV420P16LE,
+    PIX_FMT_YUV420P16BE,
+    PIX_FMT_YUV422P16LE,
+    PIX_FMT_YUV422P16BE,
+    PIX_FMT_YUV444P16LE,
+    PIX_FMT_YUV444P16BE,
+
+    PIX_FMT_VDPAU_MPEG4,
+
+    PIX_FMT_DXVA2_VLD,
+
+    PIX_FMT_RGB444LE,
+    PIX_FMT_RGB444BE,
+    PIX_FMT_BGR444LE,
+    PIX_FMT_BGR444BE,
+    PIX_FMT_GRAY8A,
+    PIX_FMT_BGR48BE,
+    PIX_FMT_BGR48LE,
+
+
+
+
+    PIX_FMT_YUV420P9BE,
+    PIX_FMT_YUV420P9LE,
+    PIX_FMT_YUV420P10BE,
+    PIX_FMT_YUV420P10LE,
+    PIX_FMT_YUV422P10BE,
+    PIX_FMT_YUV422P10LE,
+    PIX_FMT_YUV444P9BE,
+    PIX_FMT_YUV444P9LE,
+    PIX_FMT_YUV444P10BE,
+    PIX_FMT_YUV444P10LE,
+    PIX_FMT_YUV422P9BE,
+    PIX_FMT_YUV422P9LE,
+    PIX_FMT_VDA_VLD,
+
+
+
+
+
+
+
+    PIX_FMT_GBRP,
+    PIX_FMT_GBRP9BE,
+    PIX_FMT_GBRP9LE,
+    PIX_FMT_GBRP10BE,
+    PIX_FMT_GBRP10LE,
+    PIX_FMT_GBRP16BE,
+    PIX_FMT_GBRP16LE,
+
+
+    PIX_FMT_RGBA64BE=0x123,
+    PIX_FMT_RGBA64LE,
+    PIX_FMT_BGRA64BE,
+    PIX_FMT_BGRA64LE,
+
+    PIX_FMT_0RGB=0x123+4,
+    PIX_FMT_RGB0,
+    PIX_FMT_0BGR,
+    PIX_FMT_BGR0,
+    PIX_FMT_YUVA444P,
+    PIX_FMT_YUVA422P,
+
+    PIX_FMT_YUV420P12BE,
+    PIX_FMT_YUV420P12LE,
+    PIX_FMT_YUV420P14BE,
+    PIX_FMT_YUV420P14LE,
+    PIX_FMT_YUV422P12BE,
+    PIX_FMT_YUV422P12LE,
+    PIX_FMT_YUV422P14BE,
+    PIX_FMT_YUV422P14LE,
+    PIX_FMT_YUV444P12BE,
+    PIX_FMT_YUV444P12LE,
+    PIX_FMT_YUV444P14BE,
+    PIX_FMT_YUV444P14LE,
+    PIX_FMT_GBRP12BE,
+    PIX_FMT_GBRP12LE,
+    PIX_FMT_GBRP14BE,
+    PIX_FMT_GBRP14LE,
+
+    PIX_FMT_NB,
+
+};
+enum AVColorPrimaries {
+    AVCOL_PRI_BT709 = 1,
+    AVCOL_PRI_UNSPECIFIED = 2,
+    AVCOL_PRI_RESERVED = 3,
+    AVCOL_PRI_BT470M = 4,
+    AVCOL_PRI_BT470BG = 5,
+    AVCOL_PRI_SMPTE170M = 6,
+    AVCOL_PRI_SMPTE240M = 7,
+    AVCOL_PRI_FILM = 8,
+    AVCOL_PRI_BT2020 = 9,
+    AVCOL_PRI_NB,
+};
+
+
+
+
+enum AVColorTransferCharacteristic {
+    AVCOL_TRC_BT709 = 1,
+    AVCOL_TRC_UNSPECIFIED = 2,
+    AVCOL_TRC_RESERVED = 3,
+    AVCOL_TRC_GAMMA22 = 4,
+    AVCOL_TRC_GAMMA28 = 5,
+    AVCOL_TRC_SMPTE170M = 6,
+    AVCOL_TRC_SMPTE240M = 7,
+    AVCOL_TRC_LINEAR = 8,
+    AVCOL_TRC_LOG = 9,
+    AVCOL_TRC_LOG_SQRT = 10,
+    AVCOL_TRC_IEC61966_2_4 = 11,
+    AVCOL_TRC_BT1361_ECG = 12,
+    AVCOL_TRC_IEC61966_2_1 = 13,
+    AVCOL_TRC_BT2020_10 = 14,
+    AVCOL_TRC_BT2020_12 = 15,
+    AVCOL_TRC_NB,
+};
+
+
+
+
+enum AVColorSpace {
+    AVCOL_SPC_RGB = 0,
+    AVCOL_SPC_BT709 = 1,
+    AVCOL_SPC_UNSPECIFIED = 2,
+    AVCOL_SPC_RESERVED = 3,
+    AVCOL_SPC_FCC = 4,
+    AVCOL_SPC_BT470BG = 5,
+    AVCOL_SPC_SMPTE170M = 6,
+    AVCOL_SPC_SMPTE240M = 7,
+    AVCOL_SPC_YCOCG = 8,
+    AVCOL_SPC_BT2020_NCL = 9,
+    AVCOL_SPC_BT2020_CL = 10,
+    AVCOL_SPC_NB,
+};
+
+
+
+
+
+
+enum AVColorRange {
+    AVCOL_RANGE_UNSPECIFIED = 0,
+    AVCOL_RANGE_MPEG = 1,
+    AVCOL_RANGE_JPEG = 2,
+    AVCOL_RANGE_NB,
+};
+enum AVChromaLocation {
+    AVCHROMA_LOC_UNSPECIFIED = 0,
+    AVCHROMA_LOC_LEFT = 1,
+    AVCHROMA_LOC_CENTER = 2,
+    AVCHROMA_LOC_TOPLEFT = 3,
+    AVCHROMA_LOC_TOP = 4,
+    AVCHROMA_LOC_BOTTOMLEFT = 5,
+    AVCHROMA_LOC_BOTTOM = 6,
+    AVCHROMA_LOC_NB,
+};
 
 
 
@@ -7785,1042 +7592,3 @@ int avformat_match_stream_specifier(AVFormatContext *s, AVStream *st,
 
 int avformat_queue_attached_pictures(AVFormatContext *s);
 
-
-
-
-
-
-
-unsigned swscale_version(void);
-
-
-
-
-const char *swscale_configuration(void);
-
-
-
-
-const char *swscale_license(void);
-const int *sws_getCoefficients(int colorspace);
-
-
-
-typedef struct SwsVector {
-    double *coeff;
-    int length;
-} SwsVector;
-
-
-typedef struct SwsFilter {
-    SwsVector *lumH;
-    SwsVector *lumV;
-    SwsVector *chrH;
-    SwsVector *chrV;
-} SwsFilter;
-
-struct SwsContext;
-
-
-
-
-
-int sws_isSupportedInput(enum AVPixelFormat pix_fmt);
-
-
-
-
-
-int sws_isSupportedOutput(enum AVPixelFormat pix_fmt);
-
-
-
-
-
-
-int sws_isSupportedEndiannessConversion(enum AVPixelFormat pix_fmt);
-
-
-
-
-
-
-struct SwsContext *sws_alloc_context(void);
-
-
-
-
-
-
-
-int sws_init_context(struct SwsContext *sws_context, SwsFilter *srcFilter, SwsFilter *dstFilter);
-
-
-
-
-
-void sws_freeContext(struct SwsContext *swsContext);
-struct SwsContext *sws_getContext(int srcW, int srcH, enum AVPixelFormat srcFormat,
-                                  int dstW, int dstH, enum AVPixelFormat dstFormat,
-                                  int flags, SwsFilter *srcFilter,
-                                  SwsFilter *dstFilter, const double *param);
-int sws_scale(struct SwsContext *c, const uint8_t *const srcSlice[],
-              const int srcStride[], int srcSliceY, int srcSliceH,
-              uint8_t *const dst[], const int dstStride[]);
-int sws_setColorspaceDetails(struct SwsContext *c, const int inv_table[4],
-                             int srcRange, const int table[4], int dstRange,
-                             int brightness, int contrast, int saturation);
-
-
-
-
-int sws_getColorspaceDetails(struct SwsContext *c, int **inv_table,
-                             int *srcRange, int **table, int *dstRange,
-                             int *brightness, int *contrast, int *saturation);
-
-
-
-
-SwsVector *sws_allocVec(int length);
-
-
-
-
-
-SwsVector *sws_getGaussianVec(double variance, double quality);
-
-
-
-
-
-SwsVector *sws_getConstVec(double c, int length);
-
-
-
-
-
-SwsVector *sws_getIdentityVec(void);
-
-
-
-
-void sws_scaleVec(SwsVector *a, double scalar);
-
-
-
-
-void sws_normalizeVec(SwsVector *a, double height);
-void sws_convVec(SwsVector *a, SwsVector *b);
-void sws_addVec(SwsVector *a, SwsVector *b);
-void sws_subVec(SwsVector *a, SwsVector *b);
-void sws_shiftVec(SwsVector *a, int shift);
-
-
-
-
-
-SwsVector *sws_cloneVec(SwsVector *a);
-
-
-
-
-
-void sws_printVec2(SwsVector *a, AVClass *log_ctx, int log_level);
-
-void sws_freeVec(SwsVector *a);
-
-SwsFilter *sws_getDefaultFilter(float lumaGBlur, float chromaGBlur,
-                                float lumaSharpen, float chromaSharpen,
-                                float chromaHShift, float chromaVShift,
-                                int verbose);
-void sws_freeFilter(SwsFilter *filter);
-struct SwsContext *sws_getCachedContext(struct SwsContext *context,
-                                        int srcW, int srcH, enum AVPixelFormat srcFormat,
-                                        int dstW, int dstH, enum AVPixelFormat dstFormat,
-                                        int flags, SwsFilter *srcFilter,
-                                        SwsFilter *dstFilter, const double *param);
-void sws_convertPalette8ToPacked32(const uint8_t *src, uint8_t *dst, int num_pixels, const uint8_t *palette);
-void sws_convertPalette8ToPacked24(const uint8_t *src, uint8_t *dst, int num_pixels, const uint8_t *palette);
-
-
-
-
-
-
-
-const AVClass *sws_get_class(void);
-enum AVOptionType{
-    AV_OPT_TYPE_FLAGS,
-    AV_OPT_TYPE_INT,
-    AV_OPT_TYPE_INT64,
-    AV_OPT_TYPE_DOUBLE,
-    AV_OPT_TYPE_FLOAT,
-    AV_OPT_TYPE_STRING,
-    AV_OPT_TYPE_RATIONAL,
-    AV_OPT_TYPE_BINARY,
-    AV_OPT_TYPE_CONST = 128,
-    AV_OPT_TYPE_IMAGE_SIZE = (('E') | (('Z') << 8) | (('I') << 16) | ((unsigned)('S') << 24)),
-    AV_OPT_TYPE_PIXEL_FMT = (('T') | (('M') << 8) | (('F') << 16) | ((unsigned)('P') << 24)),
-    AV_OPT_TYPE_SAMPLE_FMT = (('T') | (('M') << 8) | (('F') << 16) | ((unsigned)('S') << 24)),
-    AV_OPT_TYPE_VIDEO_RATE = (('T') | (('A') << 8) | (('R') << 16) | ((unsigned)('V') << 24)),
-    AV_OPT_TYPE_DURATION = ((' ') | (('R') << 8) | (('U') << 16) | ((unsigned)('D') << 24)),
-    AV_OPT_TYPE_COLOR = (('R') | (('L') << 8) | (('O') << 16) | ((unsigned)('C') << 24)),
-    AV_OPT_TYPE_CHANNEL_LAYOUT = (('A') | (('L') << 8) | (('H') << 16) | ((unsigned)('C') << 24)),
-
-    FF_OPT_TYPE_FLAGS = 0,
-    FF_OPT_TYPE_INT,
-    FF_OPT_TYPE_INT64,
-    FF_OPT_TYPE_DOUBLE,
-    FF_OPT_TYPE_FLOAT,
-    FF_OPT_TYPE_STRING,
-    FF_OPT_TYPE_RATIONAL,
-    FF_OPT_TYPE_BINARY,
-    FF_OPT_TYPE_CONST=128,
-
-};
-
-
-
-
-typedef struct AVOption {
-    const char *name;
-
-
-
-
-
-    const char *help;
-
-
-
-
-
-    int offset;
-    enum AVOptionType type;
-
-
-
-
-    union {
-        int64_t i64;
-        double dbl;
-        const char *str;
-
-        AVRational q;
-    } default_val;
-    double min;
-    double max;
-
-    int flags;
-    const char *unit;
-} AVOption;
-
-
-
-
-typedef struct AVOptionRange {
-    const char *str;
-
-
-
-
-
-    double value_min, value_max;
-
-
-
-
-    double component_min, component_max;
-
-
-
-
-    int is_range;
-} AVOptionRange;
-
-
-
-
-typedef struct AVOptionRanges {
-    AVOptionRange **range;
-
-
-
-    int nb_ranges;
-
-
-
-    int nb_components;
-} AVOptionRanges;
-__attribute__((deprecated))
-const AVOption *av_find_opt(void *obj, const char *name, const char *unit, int mask, int flags);
-__attribute__((deprecated))
-int av_set_string3(void *obj, const char *name, const char *val, int alloc, const AVOption **o_out);
-
-__attribute__((deprecated)) const AVOption *av_set_double(void *obj, const char *name, double n);
-__attribute__((deprecated)) const AVOption *av_set_q(void *obj, const char *name, AVRational n);
-__attribute__((deprecated)) const AVOption *av_set_int(void *obj, const char *name, int64_t n);
-
-double av_get_double(void *obj, const char *name, const AVOption **o_out);
-AVRational av_get_q(void *obj, const char *name, const AVOption **o_out);
-int64_t av_get_int(void *obj, const char *name, const AVOption **o_out);
-__attribute__((deprecated)) const char *av_get_string(void *obj, const char *name, const AVOption **o_out, char *buf, int buf_len);
-__attribute__((deprecated)) const AVOption *av_next_option(void *obj, const AVOption *last);
-int av_opt_show2(void *obj, void *av_log_obj, int req_flags, int rej_flags);
-
-
-
-
-
-
-void av_opt_set_defaults(void *s);
-
-
-__attribute__((deprecated))
-void av_opt_set_defaults2(void *s, int mask, int flags);
-int av_set_options_string(void *ctx, const char *opts,
-                          const char *key_val_sep, const char *pairs_sep);
-int av_opt_set_from_string(void *ctx, const char *opts,
-                           const char *const *shorthand,
-                           const char *key_val_sep, const char *pairs_sep);
-
-
-
-void av_opt_free(void *obj);
-int av_opt_flag_is_set(void *obj, const char *field_name, const char *flag_name);
-int av_opt_set_dict(void *obj, struct AVDictionary **options);
-int av_opt_set_dict2(void *obj, struct AVDictionary **options, int search_flags);
-int av_opt_get_key_value(const char **ropts,
-                         const char *key_val_sep, const char *pairs_sep,
-                         unsigned flags,
-                         char **rkey, char **rval);
-
-enum {
-
-
-
-
-
-    AV_OPT_FLAG_IMPLICIT_KEY = 1,
-};
-int av_opt_eval_flags (void *obj, const AVOption *o, const char *val, int *flags_out);
-int av_opt_eval_int (void *obj, const AVOption *o, const char *val, int *int_out);
-int av_opt_eval_int64 (void *obj, const AVOption *o, const char *val, int64_t *int64_out);
-int av_opt_eval_float (void *obj, const AVOption *o, const char *val, float *float_out);
-int av_opt_eval_double(void *obj, const AVOption *o, const char *val, double *double_out);
-int av_opt_eval_q (void *obj, const AVOption *o, const char *val, AVRational *q_out);
-const AVOption *av_opt_find(void *obj, const char *name, const char *unit,
-                            int opt_flags, int search_flags);
-const AVOption *av_opt_find2(void *obj, const char *name, const char *unit,
-                             int opt_flags, int search_flags, void **target_obj);
-const AVOption *av_opt_next(void *obj, const AVOption *prev);
-
-
-
-
-
-
-
-void *av_opt_child_next(void *obj, void *prev);
-
-
-
-
-
-
-
-const AVClass *av_opt_child_class_next(const AVClass *parent, const AVClass *prev);
-int av_opt_set (void *obj, const char *name, const char *val, int search_flags);
-int av_opt_set_int (void *obj, const char *name, int64_t val, int search_flags);
-int av_opt_set_double(void *obj, const char *name, double val, int search_flags);
-int av_opt_set_q (void *obj, const char *name, AVRational val, int search_flags);
-int av_opt_set_bin (void *obj, const char *name, const uint8_t *val, int size, int search_flags);
-int av_opt_set_image_size(void *obj, const char *name, int w, int h, int search_flags);
-int av_opt_set_pixel_fmt (void *obj, const char *name, enum AVPixelFormat fmt, int search_flags);
-int av_opt_set_sample_fmt(void *obj, const char *name, enum AVSampleFormat fmt, int search_flags);
-int av_opt_set_video_rate(void *obj, const char *name, AVRational val, int search_flags);
-int av_opt_set_channel_layout(void *obj, const char *name, int64_t ch_layout, int search_flags);
-int av_opt_get (void *obj, const char *name, int search_flags, uint8_t **out_val);
-int av_opt_get_int (void *obj, const char *name, int search_flags, int64_t *out_val);
-int av_opt_get_double(void *obj, const char *name, int search_flags, double *out_val);
-int av_opt_get_q (void *obj, const char *name, int search_flags, AVRational *out_val);
-int av_opt_get_image_size(void *obj, const char *name, int search_flags, int *w_out, int *h_out);
-int av_opt_get_pixel_fmt (void *obj, const char *name, int search_flags, enum AVPixelFormat *out_fmt);
-int av_opt_get_sample_fmt(void *obj, const char *name, int search_flags, enum AVSampleFormat *out_fmt);
-int av_opt_get_video_rate(void *obj, const char *name, int search_flags, AVRational *out_val);
-int av_opt_get_channel_layout(void *obj, const char *name, int search_flags, int64_t *ch_layout);
-void *av_opt_ptr(const AVClass *avclass, void *obj, const char *name);
-
-
-
-
-void av_opt_freep_ranges(AVOptionRanges **ranges);
-int av_opt_query_ranges(AVOptionRanges **, void *obj, const char *key, int flags);
-
-int av_opt_copy(void *dest, void *src);
-int av_opt_query_ranges_default(AVOptionRanges **, void *obj, const char *key, int flags);
-typedef float FFTSample;
-
-typedef struct FFTComplex {
-    FFTSample re, im;
-} FFTComplex;
-
-typedef struct FFTContext FFTContext;
-
-
-
-
-
-
-FFTContext *av_fft_init(int nbits, int inverse);
-
-
-
-
-void av_fft_permute(FFTContext *s, FFTComplex *z);
-
-
-
-
-
-void av_fft_calc(FFTContext *s, FFTComplex *z);
-
-void av_fft_end(FFTContext *s);
-
-FFTContext *av_mdct_init(int nbits, int inverse, double scale);
-void av_imdct_calc(FFTContext *s, FFTSample *output, const FFTSample *input);
-void av_imdct_half(FFTContext *s, FFTSample *output, const FFTSample *input);
-void av_mdct_calc(FFTContext *s, FFTSample *output, const FFTSample *input);
-void av_mdct_end(FFTContext *s);
-
-
-
-enum RDFTransformType {
-    DFT_R2C,
-    IDFT_C2R,
-    IDFT_R2C,
-    DFT_C2R,
-};
-
-typedef struct RDFTContext RDFTContext;
-
-
-
-
-
-
-RDFTContext *av_rdft_init(int nbits, enum RDFTransformType trans);
-void av_rdft_calc(RDFTContext *s, FFTSample *data);
-void av_rdft_end(RDFTContext *s);
-
-
-
-typedef struct DCTContext DCTContext;
-
-enum DCTTransformType {
-    DCT_II = 0,
-    DCT_III,
-    DCT_I,
-    DST_I,
-};
-DCTContext *av_dct_init(int nbits, enum DCTTransformType type);
-void av_dct_calc(DCTContext *s, FFTSample *data);
-void av_dct_end (DCTContext *s);
-
-
-
-
-unsigned avfilter_version(void);
-
-
-
-
-const char *avfilter_configuration(void);
-
-
-
-
-const char *avfilter_license(void);
-
-typedef struct AVFilterContext AVFilterContext;
-typedef struct AVFilterLink AVFilterLink;
-typedef struct AVFilterPad AVFilterPad;
-typedef struct AVFilterFormats AVFilterFormats;
-
-
-
-
-
-
-
-typedef struct AVFilterBuffer {
-    uint8_t *data[8];
-    uint8_t **extended_data;
-    int linesize[8];
-
-
-    void *priv;
-
-
-
-
-
-
-    void (*free)(struct AVFilterBuffer *buf);
-
-    int format;
-    int w, h;
-    unsigned refcount;
-} AVFilterBuffer;
-typedef struct AVFilterBufferRefAudioProps {
-    uint64_t channel_layout;
-    int nb_samples;
-    int sample_rate;
-    int channels;
-} AVFilterBufferRefAudioProps;
-
-
-
-
-
-
-typedef struct AVFilterBufferRefVideoProps {
-    int w;
-    int h;
-    AVRational sample_aspect_ratio;
-    int interlaced;
-    int top_field_first;
-    enum AVPictureType pict_type;
-    int key_frame;
-    int qp_table_linesize;
-    int qp_table_size;
-    int8_t *qp_table;
-} AVFilterBufferRefVideoProps;
-typedef struct AVFilterBufferRef {
-    AVFilterBuffer *buf;
-    uint8_t *data[8];
-    uint8_t **extended_data;
-    int linesize[8];
-
-    AVFilterBufferRefVideoProps *video;
-    AVFilterBufferRefAudioProps *audio;
-
-
-
-
-
-
-    int64_t pts;
-    int64_t pos;
-
-    int format;
-
-    int perms;
-
-    enum AVMediaType type;
-
-    AVDictionary *metadata;
-} AVFilterBufferRef;
-
-
-
-
-__attribute__((deprecated))
-void avfilter_copy_buffer_ref_props(AVFilterBufferRef *dst, const AVFilterBufferRef *src);
-__attribute__((deprecated))
-AVFilterBufferRef *avfilter_ref_buffer(AVFilterBufferRef *ref, int pmask);
-__attribute__((deprecated))
-void avfilter_unref_buffer(AVFilterBufferRef *ref);
-__attribute__((deprecated))
-void avfilter_unref_bufferp(AVFilterBufferRef **ref);
-
-
-
-
-
-__attribute__((deprecated))
-int avfilter_ref_get_channels(AVFilterBufferRef *ref);
-struct AVFilterPad {
-
-
-
-
-
-    const char *name;
-
-
-
-
-    enum AVMediaType type;
-    __attribute__((deprecated)) int min_perms;
-    __attribute__((deprecated)) int rej_perms;
-
-
-
-
-    int (*start_frame)(AVFilterLink *link, AVFilterBufferRef *picref);
-
-
-
-
-
-
-
-    AVFrame *(*get_video_buffer)(AVFilterLink *link, int w, int h);
-
-
-
-
-
-
-
-    AVFrame *(*get_audio_buffer)(AVFilterLink *link, int nb_samples);
-
-
-
-
-    int (*end_frame)(AVFilterLink *link);
-
-
-
-
-    int (*draw_slice)(AVFilterLink *link, int y, int height, int slice_dir);
-    int (*filter_frame)(AVFilterLink *link, AVFrame *frame);
-    int (*poll_frame)(AVFilterLink *link);
-    int (*request_frame)(AVFilterLink *link);
-    int (*config_props)(AVFilterLink *link);
-
-
-
-
-
-
-
-    int needs_fifo;
-
-
-
-
-
-
-
-    int needs_writable;
-};
-
-
-
-
-
-
-int avfilter_pad_count(const AVFilterPad *pads);
-const char *avfilter_pad_get_name(const AVFilterPad *pads, int pad_idx);
-enum AVMediaType avfilter_pad_get_type(const AVFilterPad *pads, int pad_idx);
-typedef struct AVFilter {
-
-
-
-    const char *name;
-
-
-
-
-
-
-    const char *description;
-    const AVFilterPad *inputs;
-
-
-
-
-
-
-
-    const AVFilterPad *outputs;
-    const AVClass *priv_class;
-
-
-
-
-    int flags;
-    int (*init)(AVFilterContext *ctx);
-    int (*init_dict)(AVFilterContext *ctx, AVDictionary **options);
-    void (*uninit)(AVFilterContext *ctx);
-    int (*query_formats)(AVFilterContext *);
-
-    int priv_size;
-
-
-
-
-
-    struct AVFilter *next;
-    int (*process_command)(AVFilterContext *, const char *cmd, const char *arg, char *res, int res_len, int flags);
-
-
-
-
-
-
-    int (*init_opaque)(AVFilterContext *ctx, void *opaque);
-} AVFilter;
-
-
-
-
-
-
-typedef struct AVFilterInternal AVFilterInternal;
-
-
-struct AVFilterContext {
-    const AVClass *av_class;
-
-    const AVFilter *filter;
-
-    char *name;
-
-    AVFilterPad *input_pads;
-    AVFilterLink **inputs;
-
-    __attribute__((deprecated)) unsigned input_count;
-
-    unsigned nb_inputs;
-
-    AVFilterPad *output_pads;
-    AVFilterLink **outputs;
-
-    __attribute__((deprecated)) unsigned output_count;
-
-    unsigned nb_outputs;
-
-    void *priv;
-
-    struct AVFilterGraph *graph;
-    int thread_type;
-
-
-
-
-    AVFilterInternal *internal;
-
-    struct AVFilterCommand *command_queue;
-
-    char *enable_str;
-    void *enable;
-    double *var_values;
-    int is_disabled;
-};
-struct AVFilterLink {
-    AVFilterContext *src;
-    AVFilterPad *srcpad;
-
-    AVFilterContext *dst;
-    AVFilterPad *dstpad;
-
-    enum AVMediaType type;
-
-
-    int w;
-    int h;
-    AVRational sample_aspect_ratio;
-
-    uint64_t channel_layout;
-    int sample_rate;
-
-    int format;
-    AVRational time_base;
-    AVFilterFormats *in_formats;
-    AVFilterFormats *out_formats;
-
-
-
-
-
-    AVFilterFormats *in_samplerates;
-    AVFilterFormats *out_samplerates;
-    struct AVFilterChannelLayouts *in_channel_layouts;
-    struct AVFilterChannelLayouts *out_channel_layouts;
-    int request_samples;
-
-
-    enum {
-        AVLINK_UNINIT = 0,
-        AVLINK_STARTINIT,
-        AVLINK_INIT
-    } init_state;
-
-    struct AVFilterPool *pool;
-
-
-
-
-    struct AVFilterGraph *graph;
-
-
-
-
-
-    int64_t current_pts;
-
-
-
-
-    int age_index;
-    AVRational frame_rate;
-
-
-
-
-    AVFrame *partial_buf;
-
-
-
-
-
-    int partial_buf_size;
-    int min_samples;
-
-
-
-
-
-    int max_samples;
-    AVFilterBufferRef *cur_buf_copy;
-    int closed;
-
-
-
-
-    int channels;
-
-
-
-
-
-    unsigned frame_requested;
-
-
-
-
-    unsigned flags;
-
-
-
-
-    int64_t frame_count;
-};
-int avfilter_link(AVFilterContext *src, unsigned srcpad,
-                  AVFilterContext *dst, unsigned dstpad);
-
-
-
-
-void avfilter_link_free(AVFilterLink **link);
-
-
-
-
-int avfilter_link_get_channels(AVFilterLink *link);
-
-
-
-
-void avfilter_link_set_closed(AVFilterLink *link, int closed);
-
-
-
-
-
-
-
-int avfilter_config_links(AVFilterContext *filter);
-__attribute__((deprecated))
-AVFilterBufferRef *
-avfilter_get_video_buffer_ref_from_arrays(uint8_t * const data[4], const int linesize[4], int perms,
-                                          int w, int h, enum AVPixelFormat format);
-__attribute__((deprecated))
-AVFilterBufferRef *avfilter_get_audio_buffer_ref_from_arrays(uint8_t **data,
-                                                             int linesize,
-                                                             int perms,
-                                                             int nb_samples,
-                                                             enum AVSampleFormat sample_fmt,
-                                                             uint64_t channel_layout);
-__attribute__((deprecated))
-AVFilterBufferRef *avfilter_get_audio_buffer_ref_from_arrays_channels(uint8_t **data,
-                                                                      int linesize,
-                                                                      int perms,
-                                                                      int nb_samples,
-                                                                      enum AVSampleFormat sample_fmt,
-                                                                      int channels,
-                                                                      uint64_t channel_layout);
-int avfilter_process_command(AVFilterContext *filter, const char *cmd, const char *arg, char *res, int res_len, int flags);
-
-
-void avfilter_register_all(void);
-
-
-
-__attribute__((deprecated))
-void avfilter_uninit(void);
-int avfilter_register(AVFilter *filter);
-AVFilter *avfilter_get_by_name(const char *name);
-
-
-
-
-
-
-const AVFilter *avfilter_next(const AVFilter *prev);
-__attribute__((deprecated))
-AVFilter **av_filter_next(AVFilter **filter);
-__attribute__((deprecated))
-int avfilter_open(AVFilterContext **filter_ctx, AVFilter *filter, const char *inst_name);
-__attribute__((deprecated))
-int avfilter_init_filter(AVFilterContext *filter, const char *args, void *opaque);
-int avfilter_init_str(AVFilterContext *ctx, const char *args);
-int avfilter_init_dict(AVFilterContext *ctx, AVDictionary **options);
-
-
-
-
-
-
-
-void avfilter_free(AVFilterContext *filter);
-int avfilter_insert_filter(AVFilterLink *link, AVFilterContext *filt,
-                           unsigned filt_srcpad_idx, unsigned filt_dstpad_idx);
-__attribute__((deprecated))
-int avfilter_copy_frame_props(AVFilterBufferRef *dst, const AVFrame *src);
-
-
-
-
-
-
-
-__attribute__((deprecated))
-int avfilter_copy_buf_props(AVFrame *dst, const AVFilterBufferRef *src);
-
-
-
-
-
-
-
-const AVClass *avfilter_get_class(void);
-
-typedef struct AVFilterGraphInternal AVFilterGraphInternal;
-typedef int (avfilter_action_func)(AVFilterContext *ctx, void *arg, int jobnr, int nb_jobs);
-typedef int (avfilter_execute_func)(AVFilterContext *ctx, avfilter_action_func *func,
-                                    void *arg, int *ret, int nb_jobs);
-
-typedef struct AVFilterGraph {
-    const AVClass *av_class;
-
-    __attribute__((deprecated))
-    unsigned filter_count_unused;
-
-    AVFilterContext **filters;
-
-
-
-
-    char *scale_sws_opts;
-    char *resample_lavr_opts;
-
-    unsigned nb_filters;
-    int thread_type;
-
-
-
-
-
-
-    int nb_threads;
-
-
-
-
-    AVFilterGraphInternal *internal;
-
-
-
-
-
-
-    void *opaque;
-    avfilter_execute_func *execute;
-
-    char *aresample_swr_opts;
-    AVFilterLink **sink_links;
-    int sink_links_count;
-
-    unsigned disable_auto_convert;
-} AVFilterGraph;
-
-
-
-
-AVFilterGraph *avfilter_graph_alloc(void);
-AVFilterContext *avfilter_graph_alloc_filter(AVFilterGraph *graph,
-                                             const AVFilter *filter,
-                                             const char *name);
-AVFilterContext *avfilter_graph_get_filter(AVFilterGraph *graph, const char *name);
-__attribute__((deprecated))
-int avfilter_graph_add_filter(AVFilterGraph *graphctx, AVFilterContext *filter);
-int avfilter_graph_create_filter(AVFilterContext **filt_ctx, const AVFilter *filt,
-                                 const char *name, const char *args, void *opaque,
-                                 AVFilterGraph *graph_ctx);
-void avfilter_graph_set_auto_convert(AVFilterGraph *graph, unsigned flags);
-
-enum {
-    AVFILTER_AUTO_CONVERT_ALL = 0,
-    AVFILTER_AUTO_CONVERT_NONE = -1,
-};
-int avfilter_graph_config(AVFilterGraph *graphctx, void *log_ctx);
-
-
-
-
-
-void avfilter_graph_free(AVFilterGraph **graph);
-typedef struct AVFilterInOut {
-
-    char *name;
-
-
-    AVFilterContext *filter_ctx;
-
-
-    int pad_idx;
-
-
-    struct AVFilterInOut *next;
-} AVFilterInOut;
-
-
-
-
-
-
-AVFilterInOut *avfilter_inout_alloc(void);
-
-
-
-
-
-void avfilter_inout_free(AVFilterInOut **inout);
-__attribute__((deprecated))
-int avfilter_graph_parse(AVFilterGraph *graph, const char *filters,
-                         AVFilterInOut **inputs, AVFilterInOut **outputs,
-                         void *log_ctx);
-int avfilter_graph_parse_ptr(AVFilterGraph *graph, const char *filters,
-                             AVFilterInOut **inputs, AVFilterInOut **outputs,
-                             void *log_ctx);
-int avfilter_graph_parse2(AVFilterGraph *graph, const char *filters,
-                          AVFilterInOut **inputs,
-                          AVFilterInOut **outputs);
-int avfilter_graph_send_command(AVFilterGraph *graph, const char *target, const char *cmd, const char *arg, char *res, int res_len, int flags);
-int avfilter_graph_queue_command(AVFilterGraph *graph, const char *target, const char *cmd, const char *arg, int flags, double ts);
-char *avfilter_graph_dump(AVFilterGraph *graph, const char *options);
-int avfilter_graph_request_oldest(AVFilterGraph *graph);

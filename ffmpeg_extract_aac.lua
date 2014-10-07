@@ -6,7 +6,6 @@ SECTION "Initializing the FFI library"
 local ffi = require 'ffi'
 local C = ffi.C
 
-local avcodec = ffi.load('avcodec-55')
 local avformat = ffi.load('avformat-55')
 local avutil = ffi.load('avutil-52')
 local header = assert(io.open('ffmpeg.h')):read('*a')
@@ -27,7 +26,6 @@ end
 
 SECTION "Initializing the avcodec and avformat libraries"
 
-avcodec.avcodec_register_all()
 avformat.av_register_all()
 
 SECTION "Opening file"
