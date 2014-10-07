@@ -100,13 +100,8 @@ packet.size = 0
 
 while (avformat.av_read_frame(input_context, packet) >= 0) do
 	if packet.stream_index == audio_stream_id then
-		local new_packet = ffi.new("AVPacket")
-		new_packet.stream_index = 0;
-		new_packet.pts = packet.pts;
-		new_packet.dts = packet.dts;
-		new_packet.data = packet.data;
-		new_packet.size = packet.size;
-		avformat.av_interleaved_write_frame(output_format_context, new_packet)
+		packet.stream_index = 0
+		avformat.av_interleaved_write_frame(output_format_context, packet)
 	end
 end
 
