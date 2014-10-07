@@ -1,4 +1,3 @@
--- Initializing the FFI library
 local M = {}
 local ffi = require 'ffi'
 local avformat = ffi.load('avformat-55')
