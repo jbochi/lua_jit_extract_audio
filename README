@@ -1,2 +1,0 @@
-
-To recreate ffmpeg.h, run gcc -E -I $PATH_TO_FFMPEG_SRC tmp.h > ffmpeg.h
