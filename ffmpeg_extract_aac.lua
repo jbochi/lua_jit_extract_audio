@@ -13,16 +13,16 @@ local header = assert(io.open('ffmpeg.h')):read('*a')
 ffi.cdef(header)
 
 local function avAssert(err)
-	if err < 0 then
-		local errbuf = ffi.new("uint8_t[256]")
-		local ret = avutil.av_strerror(err, errbuf, 256)
-		if ret ~= -1 then
-			error(ffi.string(errbuf), 2)
-		else
-			error('Unknown AV error: '..tostring(ret), 2)
-		end
-	end
-	return err
+  if err < 0 then
+    local errbuf = ffi.new("uint8_t[256]")
+    local ret = avutil.av_strerror(err, errbuf, 256)
+    if ret ~= -1 then
+      error(ffi.string(errbuf), 2)
+    else
+      error('Unknown AV error: '..tostring(ret), 2)
+    end
+  end
+  return err
 end
 
 SECTION "Initializing the avcodec and avformat libraries"
@@ -36,12 +36,12 @@ SECTION "Opening file"
 local f = assert(io.open(FILENAME, "r"))
 
 local function read_function(opaque, buf, buf_size)
-	local data = f:read(buf_size)
-	if data == nil then
-		return 0
-	end
-	ffi.copy(buf, data, #data)
-	return #data
+  local data = f:read(buf_size)
+  if data == nil then
+    return 0
+  end
+  ffi.copy(buf, data, #data)
+  return #data
 end
 
 
@@ -78,8 +78,8 @@ local output_audio_stream = avformat.avformat_new_stream(output_format_context, 
 local file = io.open("output.aac", "w")
 
 local write_packet = function(opaque, buf, buf_size)
-	file:write(ffi.string(buf, buf_size))
-	return buf_size
+  file:write(ffi.string(buf, buf_size))
+  return buf_size
 end
 
 local buffer_size = 1024
@@ -99,10 +99,10 @@ packet.data = nil
 packet.size = 0
 
 while (avformat.av_read_frame(input_context, packet) >= 0) do
-	if packet.stream_index == audio_stream_id then
-		packet.stream_index = 0
-		avformat.av_interleaved_write_frame(output_format_context, packet)
-	end
+  if packet.stream_index == audio_stream_id then
+    packet.stream_index = 0
+    avformat.av_interleaved_write_frame(output_format_context, packet)
+  end
 end
 
 avformat.av_write_trailer(output_format_context)
