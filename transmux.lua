@@ -48,19 +48,19 @@ M.extract_audio = function(read_function, write_function)
   output_format_context.pb = io_context
   output_format_context.oformat = avformat.av_guess_format("adts", nil, nil)
 
-  avformat.avcodec_copy_context(output_audio_stream.codec, input_audio_stream.codec)
-  avformat.avformat_write_header(output_format_context, nil)
+  av_assert(avformat.avcodec_copy_context(output_audio_stream.codec, input_audio_stream.codec))
+  av_assert(avformat.avformat_write_header(output_format_context, nil))
 
   local packet = ffi.new("AVPacket")
 
   while (avformat.av_read_frame(input_context, packet) >= 0) do
     if packet.stream_index == audio_stream_id then
       packet.stream_index = 0
-      avformat.av_interleaved_write_frame(output_format_context, packet)
+      av_assert(avformat.av_interleaved_write_frame(output_format_context, packet))
     end
   end
 
-  avformat.av_write_trailer(output_format_context)
+  av_assert(avformat.av_write_trailer(output_format_context))
   avformat.av_free(io_context)
   avformat.av_free(input_context)
 end
