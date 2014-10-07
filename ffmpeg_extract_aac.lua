@@ -32,24 +32,45 @@ avformat.av_register_all()
 
 SECTION "Opening file"
 
-local pinputContext = ffi.new("AVFormatContext*[1]")
-avAssert(avformat.avformat_open_input(pinputContext, FILENAME, nil, nil))
-local inputContext = pinputContext[0]
 
-avAssert(avformat.av_find_stream_info(inputContext))
+local f = assert(io.open(FILENAME, "r"))
+
+local function read_function(opaque, buf, buf_size)
+	local data = f:read(buf_size)
+	if data == nil then
+		return 0
+	end
+	ffi.copy(buf, data, #data)
+	return #data
+end
+
+
+local read_buffer_size = 8192
+local read_exchange_area = ffi.C.malloc(read_buffer_size)
+
+local io_input_context = avformat.avio_alloc_context(read_exchange_area, read_buffer_size, 0, nil, read_function, nil, nil)
+
+local pinput_context = ffi.new("AVFormatContext*[1]")
+local input_context = avformat.avformat_alloc_context()
+input_context.pb = io_input_context
+pinput_context[0] = input_context
+
+avAssert(avformat.avformat_open_input(pinput_context, "dummy", nil, nil))
 
 SECTION "Finding audio stream"
 
+avAssert(avformat.av_find_stream_info(input_context))
+
 local audioCtx
-local nStreams = tonumber(inputContext.nb_streams)
+local nStreams = tonumber(input_context.nb_streams)
 
 print("n streams: " .. nStreams)
 
-local audio_stream_id = avAssert(avformat.av_find_best_stream(inputContext, avformat.AVMEDIA_TYPE_AUDIO, -1, -1, nil, 0));
+local audio_stream_id = avAssert(avformat.av_find_best_stream(input_context, avformat.AVMEDIA_TYPE_AUDIO, -1, -1, nil, 0));
 
 print("stream aac: " .. audio_stream_id)
 
-local input_audio_stream = inputContext.streams[audio_stream_id]
+local input_audio_stream = input_context.streams[audio_stream_id]
 local output_format_context = avformat.avformat_alloc_context()
 local output_audio_stream = avformat.avformat_new_stream(output_format_context, nil)
 
@@ -62,7 +83,7 @@ local write_packet = function(opaque, buf, buf_size)
 end
 
 local buffer_size = 1024
-local exchange_area = ffi.new("unsigned char[" .. buffer_size .. "]")
+local exchange_area = ffi.C.malloc(buffer_size)
 local io_context = avformat.avio_alloc_context(exchange_area, buffer_size, 1, nil, nil, write_packet, nil)
 
 output_format_context.pb = io_context
@@ -77,7 +98,7 @@ local packet = ffi.new("AVPacket")
 packet.data = nil
 packet.size = 0
 
-while (avformat.av_read_frame(inputContext, packet) >= 0) do
+while (avformat.av_read_frame(input_context, packet) >= 0) do
 	if packet.stream_index == audio_stream_id then
 		local new_packet = ffi.new("AVPacket")
 		new_packet.stream_index = 0;
@@ -91,5 +112,6 @@ end
 
 avformat.av_write_trailer(output_format_context)
 avformat.av_free(io_context)
+avformat.av_free(input_context)
 
 SECTION "output.aac created"
