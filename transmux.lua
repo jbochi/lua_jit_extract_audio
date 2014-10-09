@@ -20,8 +20,37 @@ local function av_assert(err)
   return err
 end
 
+local id3_timestamp_representation = function(timestamp)
+  local hex_timestamp = string.format("%016x", timestamp)
+  local chars = {}
+  for i = 1, 16, 2 do
+    local byte = tonumber(string.sub(hex_timestamp, i, i + 1), 16)
+    chars[#chars + 1] = string.char(byte)
+  end
+  return table.concat(chars)
+end
+
+local id3_header = function(timestamp)
+  local OWNER = "com.apple.streaming.transportStreamTimestamp"
+  local buffer = {
+    -- header
+    "ID3",                          -- file identifier
+    string.char(0x04, 0),           -- version
+    string.char(0),                 -- flags
+    string.char(0, 0, 0, 63),       -- size: 63 bytes
+    -- frame
+    "PRIV",                         -- frame id
+    string.char(0, 0, 0, 53),       -- frame size: 53 bytes
+    string.char(0, 0),              -- flags
+    OWNER,                          -- owner
+    string.char(0),                 -- owner terminator
+    id3_timestamp_representation(timestamp)
+  }
+  return table.concat(buffer)
+end
 
 M.extract_audio = function(read_function, write_function)
+  local first_packet = true
   local read_buffer_size = 8192
   local read_exchange_area = ffi.C.malloc(read_buffer_size)
 
@@ -54,6 +83,11 @@ M.extract_audio = function(read_function, write_function)
 
   while (avformat.av_read_frame(input_context, packet) >= 0) do
     if packet.stream_index == audio_stream_id then
+      if first_packet then
+        local id3_tag = id3_header(tonumber(packet.pts))
+        write_function(nil, id3_tag, #id3_tag)
+        first_packet = false
+      end
       packet.stream_index = 0
       av_assert(avformat.av_interleaved_write_frame(output_format_context, packet))
     end
