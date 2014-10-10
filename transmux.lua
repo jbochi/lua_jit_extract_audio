@@ -91,11 +91,16 @@ M.extract_audio = function(read_function, write_function)
       packet.stream_index = 0
       av_assert(avformat.av_interleaved_write_frame(output_format_context, packet))
     end
+    avformat.av_free_packet(packet);
   end
 
   av_assert(avformat.av_write_trailer(output_format_context))
+  ffi.C.free(read_exchange_area)
+  ffi.C.free(exchange_area)
   avformat.av_free(io_context)
   avformat.av_free(input_context)
+  avformat.avformat_free_context(output_format_context)
+  avformat.avformat_close_input(input_format_context)
 end
 
 return M
