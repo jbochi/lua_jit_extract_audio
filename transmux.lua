@@ -1,11 +1,14 @@
 local M = {}
 local ffi = require 'ffi'
-local avformat = ffi.load('avformat-55')
-local avutil = ffi.load('avutil-52')
+local avformat = ffi.load('avformat')
+local avutil = ffi.load('avutil')
 local header = assert(io.open('ffmpeg.h')):read('*a')
+local AV_LOG_FATAL = 8
+local callback = "int (*)(void *, uint8_t *, int)"
 ffi.cdef(header)
 
 avformat.av_register_all()
+avformat.av_log_set_level(AV_LOG_FATAL)
 
 local function av_assert(err)
   if err < 0 then
@@ -49,10 +52,10 @@ local id3_header = function(timestamp)
   return table.concat(buffer)
 end
 
-M.extract_audio = function(read_function, write_function)
-  local first_packet = true
+local function extract_audio(read_function, write_function)
   local read_buffer_size = 8192
   local read_exchange_area = ffi.C.malloc(read_buffer_size)
+  local first_packet = true
 
   local io_input_context = avformat.avio_alloc_context(read_exchange_area, read_buffer_size, 0, nil, read_function, nil, nil)
 
@@ -63,13 +66,13 @@ M.extract_audio = function(read_function, write_function)
 
   av_assert(avformat.avformat_open_input(pinput_context, "dummy", nil, nil))
   av_assert(avformat.av_find_stream_info(input_context))
-  local audio_stream_id = av_assert(avformat.av_find_best_stream(input_context, avformat.AVMEDIA_TYPE_AUDIO, -1, -1, nil, 0));
+  local audio_stream_id = av_assert(avformat.av_find_best_stream(input_context, avformat.AVMEDIA_TYPE_AUDIO, -1, -1, nil, 0))
 
   local input_audio_stream = input_context.streams[audio_stream_id]
   local output_format_context = avformat.avformat_alloc_context()
   local output_audio_stream = avformat.avformat_new_stream(output_format_context, nil)
 
-  local buffer_size = 1024
+  local buffer_size = 8192
   local exchange_area = ffi.C.malloc(buffer_size)
   local io_context = avformat.avio_alloc_context(exchange_area, buffer_size, 1, nil, nil, write_function, nil)
 
@@ -85,23 +88,48 @@ M.extract_audio = function(read_function, write_function)
     if packet.stream_index == audio_stream_id then
       if first_packet then
         local id3_tag = id3_header(tonumber(packet.pts))
-        write_function(nil, id3_tag, #id3_tag)
+        write_function(nil, ffi.cast("uint8_t *", id3_tag), #id3_tag)
         first_packet = false
       end
       packet.stream_index = 0
       av_assert(avformat.av_interleaved_write_frame(output_format_context, packet))
     end
-    avformat.av_free_packet(packet);
+    avformat.av_free_packet(packet)
   end
 
   av_assert(avformat.av_write_trailer(output_format_context))
-  ffi.C.free(read_exchange_area)
-  ffi.C.free(exchange_area)
   avformat.av_free(io_context)
   avformat.av_free(io_input_context)
   avformat.av_free(input_context)
   avformat.avformat_free_context(output_format_context)
-  avformat.avformat_close_input(input_format_context)
+end
+jit.off(extract_audio)
+M.extract_audio = extract_audio
+
+M.extract_audio_from_string = function(data)
+  local pos = 1
+
+  local read_function = ffi.cast(callback, function(opaque, buf, buf_size)
+    local final_pos = math.min(pos + buf_size, #data + 1)
+    local delta = final_pos - pos
+    if delta == 0 then
+      return 0
+    end
+    ffi.copy(buf, string.sub(data, pos, final_pos - 1), delta)
+    pos = final_pos
+    return delta
+  end)
+
+  local output = {}
+  local write_function = ffi.cast(callback, function(opaque, buf, buf_size)
+    output[#output + 1] = ffi.string(buf, buf_size)
+    return buf_size
+  end)
+
+  extract_audio(read_function, write_function)
+  read_function:free()
+  write_function:free()
+  return table.concat(output)
 end
 
 return M
