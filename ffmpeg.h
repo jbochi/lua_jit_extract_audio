@@ -1,5 +1,3 @@
-
-
 typedef signed char __int8_t;
 
 
@@ -7591,4 +7589,3 @@ int avformat_match_stream_specifier(AVFormatContext *s, AVStream *st,
                                     const char *spec);
 
 int avformat_queue_attached_pictures(AVFormatContext *s);
-
